@@ -26,6 +26,12 @@ class CreatePostForm(forms.ModelForm):
                     css_class='panel-heading',
                 ),
                 Div(
+                    Div(
+                        HTML("You cannot make an empty post"),
+                        css_class="alert alert-danger",
+                        role="alert",
+                        css_id="empty-post-error-message",
+                    ),
                     Field('text', placeholder="What's on your mind?", css_class='form-control',
                           rows='3', cols='30'),
                     css_class='panel-body',
