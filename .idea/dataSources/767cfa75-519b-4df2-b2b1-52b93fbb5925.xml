@@ -9,14 +9,14 @@
     </database>
     <schema id="3" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2016-12-11.18:29:14.484</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2016-12-11.22:21:42.927</IntrospectionTimestamp>
       <IntrospectionStateNumber>1244</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
     <schema id="4" parent="2" name="pg_catalog">
       <ObjectId>11</ObjectId>
-      <IntrospectionTimestamp>2016-12-11.18:29:14.484</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2016-12-11.22:21:42.927</IntrospectionTimestamp>
       <IntrospectionStateNumber>1003</IntrospectionStateNumber>
       <Visible>1</Visible>
     </schema>
