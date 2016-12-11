@@ -1,5 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Div, Layout, HTML, Field, Submit
+from crispy_forms.bootstrap import Alert
 from django.core.urlresolvers import reverse
 from django import forms
 
@@ -26,10 +27,9 @@ class CreatePostForm(forms.ModelForm):
                     css_class='panel-heading',
                 ),
                 Div(
-                    Div(
-                        HTML("You cannot make an empty post"),
-                        css_class="alert alert-danger",
-                        role="alert",
+                    Alert(
+                        "<strong>Error:<You cannot make an empty post",
+                        css_class="alert-danger",
                         css_id="empty-post-error-message",
                     ),
                     Field('text', placeholder="What's on your mind?", css_class='form-control',
