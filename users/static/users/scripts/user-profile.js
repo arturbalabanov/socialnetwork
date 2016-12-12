@@ -55,11 +55,39 @@ $(document).ready(function () {
     $friendButtons.click(toggleFriendAjaxRequest);
 
     // ==================================================
+
+    function likePosts() {
+        var $likeButtons = $('.like-button');
+
+        function likePostAjaxRequest($post) {
+            var id = $post.attr('data-post-id');
+
+            var requestData = {
+                'id': id
+            };
+
+            $.post(LIKE_TIMELINE_POST_URL, requestData).success(function (data) {
+                $post.find('.number-of-likes').text(data['number_of_likes']);
+            });
+        }
+
+        $likeButtons.click(function (e) {
+            var $this = $(this);
+            var $post = $this.closest('.timeline-post');
+            likePostAjaxRequest($post);
+        });
+    }
+
+    // ==================================================
+
     var post_template = Handlebars.compile($('#timeline-post-template').html());
 
     $.get(POSTS_LIST_URL).done(function (data) {
         $allPosts.append(post_template({posts: data}));
+        likePosts();
     });
+
+    // ==================================================
 
     var $newPostForm = $('#new-post-form');
     var $allPosts = $('#all-posts');
@@ -96,25 +124,4 @@ $(document).ready(function () {
         newPostAjaxRequest($textarea);
     });
 
-    // ==================================================
-
-    var $likeButtons = $('.like-button');
-
-    function likePostAjaxRequest($post) {
-        var id = $post.attr('data-post-id');
-
-        var requestData = {
-            'id': id
-        };
-
-        $.post(LIKE_TIMELINE_POST_URL, requestData).done(function (data) {
-            $post.find('.number-of-likes').text(data['likes']);
-        });
-    }
-
-    $likeButtons.click(function (e) {
-        var $this = $(this);
-        var $post = $this.closest('.timeline-post');
-        likePostAjaxRequest($post);
-    });
 });
