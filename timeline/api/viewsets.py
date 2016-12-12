@@ -1,13 +1,13 @@
-from rest_framework.generics import ListCreateAPIView
+from rest_framework import viewsets
 
 from timeline.api.permissions import IsAuthorOrReadOnly
 from timeline.api.serializers import PostSerializer
 from timeline.models import Post
 
 
-class PostListCreate(ListCreateAPIView):
-    queryset = Post.objects.all()
+class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
+    queryset = Post.objects.all()
     permission_classes = (IsAuthorOrReadOnly,)
 
     def perform_create(self, serializer):

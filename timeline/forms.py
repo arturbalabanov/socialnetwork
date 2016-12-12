@@ -28,7 +28,7 @@ class CreatePostForm(forms.ModelForm):
                 ),
                 Div(
                     Alert(
-                        "<strong>Error:<You cannot make an empty post",
+                        "<strong>Error:</strong> You cannot make an empty post",
                         css_class="alert-danger",
                         css_id="empty-post-error-message",
                     ),
