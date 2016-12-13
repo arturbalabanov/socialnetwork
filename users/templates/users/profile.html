@@ -12,6 +12,8 @@
 
 {% block content %}
 
+    <h1>{% url 'timeline:post-list' %}</h1>
+
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="alert alert-success" role="alert" id="friend-successful-alert">
@@ -113,8 +115,8 @@
         var PROFILE_USER_USERNAME = "{{ profile_user.username | escapejs }}";
         var FRIEND_USER_URL = "{% url 'users:friend'  %}";
         var ARE_FRIENDS = "{{ are_friends | escapejs }}" == "True";
-        var LIKE_TIMELINE_POST_URL = "{% url 'timeline:like_post' %}";
-        var POSTS_LIST_URL = "{% url 'timeline:create_post' %}";
+{#        var LIKE_TIMELINE_POST_URL = "{% url 'timeline:like_post' %}";#}
+        var POSTS_LIST_URL = "{% url 'timeline:post-list' %}";
     </script>
     <script src="{% static 'scripts/ajax-csrf.js' %}"></script>
     <script src="{% static 'users/scripts/user-profile.js' %}"></script>

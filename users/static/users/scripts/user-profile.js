@@ -106,7 +106,6 @@ $(document).ready(function () {
             .done(function (newPostData) {
                 $textarea.val("");
                 $emptyPostErrorMessage.hide();
-                console.log(newPostData);
                 var $newPost = $(post_template({posts: newPostData}));
                 $newPost.hide();
                 $allPosts.prepend($newPost);
