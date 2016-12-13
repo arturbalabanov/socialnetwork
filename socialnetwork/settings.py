@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = [
     'crispy_forms',
     'rest_framework',
     'templatetag_handlebars',
+    'djng',
 ]
 
 PROJECT_APPS = [
