@@ -63,7 +63,6 @@ class ProfileView(DetailView):
 
         context['are_friends'] = user.friends.filter(username=profile_user.username).exists()
         context['own_profile'] = user == profile_user
-        context['posts'] = user.timeline_posts.all()
         context['post_form'] = CreatePostForm()
 
         return context
