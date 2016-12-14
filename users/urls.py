@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'logout/$', LogoutView.as_view(), name='logout'),
     url(r'register/$', RegisterView.as_view(), name='register'),
     url(r'profile/(?P<slug>[\w.@+-]+)/$', ProfileView.as_view(), name='profile'),
+    url(r'get-posts/(?P<username>[\w.@+-]+)/$', 'users.api.views.get_posts', name='get-posts'),
     url(r'friend/$', FriendView.as_view(), name='friend'),
     url(r'search$', SearchView.as_view(), name='search_results'),
 ]
