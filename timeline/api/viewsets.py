@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from timeline.api.permissions import IsAuthorOrReadOnly
+from timeline.api.permissions import PostPermission
 from timeline.api.serializers import PostSerializer
 from timeline.models import Post
 
@@ -10,7 +10,7 @@ from timeline.models import Post
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    permission_classes = (IsAuthorOrReadOnly,)
+    permission_classes = (PostPermission,)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
