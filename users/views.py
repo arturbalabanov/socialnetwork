@@ -1,9 +1,14 @@
 from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.views.generic import FormView, CreateView, RedirectView, DetailView, View, ListView
 from braces.views import AnonymousRequiredMixin, LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
+from timeline.api.serializers import PostSerializer
 from timeline.forms import CreatePostForm
 from users.forms import RegistrationForm, LoginForm, SearchForm
 from users.models import UserProfile
@@ -101,3 +106,12 @@ class SearchView(ListView):
     def get_queryset(self):
         query = self.request.GET['q']
         return UserProfile.objects.filter(username__icontains=query).order_by('username')
+
+
+@api_view(['GET'])
+def get_user_posts(request, username):
+    user = get_object_or_404(UserProfile, username=username)
+    posts = user.timeline_posts.all()
+    post_serializer = PostSerializer(posts, many=True)
+
+    return Response(post_serializer.data, status=status.HTTP_200_OK)
