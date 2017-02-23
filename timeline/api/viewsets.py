@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
 
 from timeline.api.permissions import PostPermission
 from timeline.api.serializers import PostSerializer
 from timeline.models import Post
+from users.api.serializers import UserSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -22,3 +23,11 @@ class PostViewSet(viewsets.ModelViewSet):
         post.like(self.request.user)
         response_serializer = PostSerializer(post)  # FIXME: maybe serializer_class(post)?
         return Response(response_serializer.data)
+
+    @detail_route(url_path='get-likes')
+    def get_likes(self, request, pk=None):
+        post = get_object_or_404(self.queryset, pk=pk)
+        likes = post.likes.all()
+        response_serializer = UserSerializer(likes, many=True)
+        return Response(response_serializer.data)
+

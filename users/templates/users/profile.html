@@ -94,13 +94,38 @@
                                 <a class="btn btn-sm btn-primary like-button">
                                     <span class="glyphicon glyphicon-thumbs-up"></span> Like
                                 </a>
-                                <span class="number-of-likes">{{ number_of_likes }}</span> people like this
+                                <a href="#" class="post-likes-link">
+                                    <span class="number-of-likes">{{ number_of_likes }}</span> people like this
+                                </a>
                             </p>
                             <p class="text-right">{{ created }}</p>
                         </li>
                     {{/posts}}
                 {% endtplhandlebars %}
             </ul>
+        </div>
+    </div>
+    <div id="post-likes-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Likes</h4>
+                </div>
+                <div class="modal-body">
+                    <ul id="all-post-likes" class="list-group">
+                        {% tplhandlebars "post-likes-list-template" %}
+                            {{#users}}
+                                <li class="list-group-item">
+                                    <strong>{{ username }}</strong>
+                                </li>
+                            {{/users}}
+                        {% endtplhandlebars %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
