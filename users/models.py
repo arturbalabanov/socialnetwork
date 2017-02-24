@@ -40,6 +40,10 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         delta = arrow.arrow.relativedelta(today, self.birth_date)
         return delta.years
 
+    @property
+    def friends_count(self):
+        return self.friends.count()
+
     def get_absolute_url(self):
         return '/users/profile/%s/' % urlquote(self.username)
 
