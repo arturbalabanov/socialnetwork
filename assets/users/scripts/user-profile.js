@@ -80,11 +80,36 @@ $(document).ready(function () {
 
     // ==================================================
 
-    var post_template = Handlebars.compile($('#timeline-post-template').html());
+    var postLikesTemplate = Handlebars.compile($('#post-likes-list-template').html());
+
+    function showPostLikes() {
+        var $postLikesLinks = $('.post-likes-link');
+        var $postLikesModal = $('#post-likes-modal');
+        var $allPostsLikes = $('#all-post-likes');
+
+        function showLikesDialog(postId) {
+            // FIXME: hard coded URL, filthy heretic!
+            $.get("/timeline/posts/" + postId + "/get-likes/").success(function (data) {
+                $allPostsLikes.html(postLikesTemplate({users: data}));
+                $postLikesModal.modal('show');
+            });
+        }
+
+        $postLikesLinks.click(function (e) {
+            var $this = $(this);
+            var postId = $this.closest('.timeline-post').attr('data-post-id');
+            showLikesDialog(postId);
+        })
+    }
+
+    // ==================================================
+
+    var postTemplate = Handlebars.compile($('#timeline-post-template').html());
 
     $.get(POSTS_LIST_URL).done(function (data) {
-        $allPosts.append(post_template({posts: data}));
+        $allPosts.append(postTemplate({posts: data}));
         likePosts();
+        showPostLikes();
     });
 
     // ==================================================
@@ -106,8 +131,7 @@ $(document).ready(function () {
             .done(function (newPostData) {
                 $textarea.val("");
                 $emptyPostErrorMessage.hide();
-                console.log(newPostData);
-                var $newPost = $(post_template({posts: newPostData}));
+                var $newPost = $(postTemplate({posts: newPostData}));
                 $newPost.hide();
                 $allPosts.prepend($newPost);
                 $newPost.slideDown("fast");

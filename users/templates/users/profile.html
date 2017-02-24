@@ -11,119 +11,121 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="alert alert-success" role="alert" id="friend-successful-alert">
-                You are now friends with <strong>{{ profile_user.get_full_name }}</strong>
-            </div>
-            <div class="alert alert-danger" role="alert" id="unfriend-successful-alert">
-                You are no longer friends with <strong>{{ profile_user.get_full_name }}</strong>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        The profile of <strong>{{ profile_user.username }}</strong>
-                    </h3>
+    <div ng-app="profileApp" ng-controller="ProfileCtrl">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="alert alert-success" role="alert" id="friend-successful-alert">
+                    You are now friends with <strong>{{ profile_user.get_full_name }}</strong>
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-3 col-lg-3" align="center">
-                            <img alt="User Pic"
-                                 src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png"
-                                 class="img-circle img-thumbnail img-responsive">
-                        </div>
-                        <div class="col-md-9 col-lg-9">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table class="table table-user-information">
-                                        <tbody>
-                                        <tr>
-                                            <td><strong>Username</strong></td>
-                                            <td>{{ profile_user.username }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Full Name</strong></td>
-                                            <td>{{ profile_user.get_full_name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Gender</strong></td>
-                                            <td>{{ profile_user.get_gender_display }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Age</strong></td>
-                                            <td>{{ profile_user.age }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Date Joined</strong></td>
-                                            <td>{{ profile_user.date_joined | date:"d F Y" }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                <div class="alert alert-danger" role="alert" id="unfriend-successful-alert">
+                    You are no longer friends with <strong>{{ profile_user.get_full_name }}</strong>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            The profile of <strong>{{ profile_user.username }}</strong>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3" align="center">
+                                <img alt="User Pic"
+                                     src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png"
+                                     class="img-circle img-thumbnail img-responsive">
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table class="table table-user-information">
+                                            <tbody>
+                                            <tr>
+                                                <td><strong>Username</strong></td>
+                                                <td>{{ profile_user.username }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Full Name</strong></td>
+                                                <td>{{ profile_user.get_full_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Gender</strong></td>
+                                                <td>{{ profile_user.get_gender_display }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Age</strong></td>
+                                                <td>{{ profile_user.age }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Date Joined</strong></td>
+                                                <td>{{ profile_user.date_joined | date:"d F Y" }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {% if not own_profile %}
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <a class="btn btn-primary friend-buttons" id="friend-button"><i
-                                        class="glyphicon glyphicon-user"></i></a>
-                                <a class="btn btn-danger friend-buttons" id="unfriend-button"><i
-                                        class="glyphicon glyphicon-user"></i></a>
-                                <a class="btn btn-success"><i class="glyphicon glyphicon-envelope"></i></a>
+                    {% if not own_profile %}
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a class="btn btn-primary friend-buttons" id="friend-button"><i
+                                            class="glyphicon glyphicon-user"></i></a>
+                                    <a class="btn btn-danger friend-buttons" id="unfriend-button"><i
+                                            class="glyphicon glyphicon-user"></i></a>
+                                    <a class="btn btn-success"><i class="glyphicon glyphicon-envelope"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                {% if own_profile %}
+                    {% crispy post_form %}
                 {% endif %}
+                <ul id="all-posts" class="list-group">
+                    {% tplhandlebars "timeline-post-template" %}
+                        {{#posts}}
+                            <li class="list-group-item timeline-post" data-post-id="{{ id }}">
+                                <strong>{{ author }}:</strong>
+                                {{ text }}
+                                <p class="text-left">
+                                    <a class="btn btn-sm btn-primary like-button">
+                                        <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                                    </a>
+                                    <a href="#" class="post-likes-link">
+                                        <span class="number-of-likes">{{ number_of_likes }}</span> people like this
+                                    </a>
+                                </p>
+                                <p class="text-right">{{ created }}</p>
+                            </li>
+                        {{/posts}}
+                    {% endtplhandlebars %}
+                </ul>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            {% if own_profile %}
-                {% crispy post_form %}
-            {% endif %}
-            <ul id="all-posts" class="list-group">
-                {% tplhandlebars "timeline-post-template" %}
-                    {{#posts}}
-                        <li class="list-group-item timeline-post" data-post-id="{{ id }}">
-                            <strong>{{ author }}:</strong>
-                            {{ text }}
-                            <p class="text-left">
-                                <a class="btn btn-sm btn-primary like-button">
-                                    <span class="glyphicon glyphicon-thumbs-up"></span> Like
-                                </a>
-                                <a href="#" class="post-likes-link">
-                                    <span class="number-of-likes">{{ number_of_likes }}</span> people like this
-                                </a>
-                            </p>
-                            <p class="text-right">{{ created }}</p>
-                        </li>
-                    {{/posts}}
-                {% endtplhandlebars %}
-            </ul>
-        </div>
-    </div>
-    <div id="post-likes-modal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">Likes</h4>
-                </div>
-                <div class="modal-body">
-                    <ul id="all-post-likes" class="list-group">
-                        {% tplhandlebars "post-likes-list-template" %}
-                            {{#users}}
-                                <li class="list-group-item">
-                                    <strong>{{ username }}</strong>
-                                </li>
-                            {{/users}}
-                        {% endtplhandlebars %}
-                    </ul>
+        <div id="post-likes-modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Likes</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="all-post-likes" class="list-group">
+                            {% tplhandlebars "post-likes-list-template" %}
+                                {{#users}}
+                                    <li class="list-group-item">
+                                        <strong>{{ username }}</strong>
+                                    </li>
+                                {{/users}}
+                            {% endtplhandlebars %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,4 +144,5 @@
     </script>
     <script src="{% static 'scripts/ajax-csrf.js' %}"></script>
     <script src="{% static 'users/scripts/user-profile.js' %}"></script>
+    <script src="{% static 'users/scripts/app.js' %}"></script>
 {% endblock %}
