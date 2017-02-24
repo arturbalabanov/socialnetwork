@@ -104,10 +104,10 @@ $(document).ready(function () {
 
     // ==================================================
 
-    var post_template = Handlebars.compile($('#timeline-post-template').html());
+    var postTemplate = Handlebars.compile($('#timeline-post-template').html());
 
     $.get(POSTS_LIST_URL).done(function (data) {
-        $allPosts.append(post_template({posts: data}));
+        $allPosts.append(postTemplate({posts: data}));
         likePosts();
         showPostLikes();
     });
@@ -131,7 +131,7 @@ $(document).ready(function () {
             .done(function (newPostData) {
                 $textarea.val("");
                 $emptyPostErrorMessage.hide();
-                var $newPost = $(post_template({posts: newPostData}));
+                var $newPost = $(postTemplate({posts: newPostData}));
                 $newPost.hide();
                 $allPosts.prepend($newPost);
                 $newPost.slideDown("fast");
