@@ -88,24 +88,22 @@
                 {% if own_profile %}
                     {% crispy post_form %}
                 {% endif %}
-                <ul id="all-posts" class="list-group">
-                    {% tplhandlebars "timeline-post-template" %}
-                        {{#posts}}
-                            <li class="list-group-item timeline-post" data-post-id="{{ id }}">
-                                <strong>{{ author }}:</strong>
-                                {{ text }}
-                                <p class="text-left">
-                                    <a class="btn btn-sm btn-primary like-button">
-                                        <span class="glyphicon glyphicon-thumbs-up"></span> Like
-                                    </a>
-                                    <a href="#" class="post-likes-link">
-                                        <span class="number-of-likes">{{ number_of_likes }}</span> people like this
-                                    </a>
-                                </p>
-                                <p class="text-right">{{ created }}</p>
-                            </li>
-                        {{/posts}}
-                    {% endtplhandlebars %}
+                <ul id="all-posts" class="list-group" ng-init="retrieveAllPosts('{{ profile_user.username }}')">
+                    {% verbatim %}
+                    <li class="list-group-item timeline-post" ng-repeat="post in allPosts">
+                        <strong>{{ post.author }}:</strong>
+                        {{ post.text }}
+                        <p class="text-left">
+                            <a class="btn btn-sm btn-primary like-button">
+                                <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                            </a>
+                            <a href="#" class="post-likes-link">
+                                <span class="number-of-likes">{{ post.number_of_likes }}</span> people like this
+                            </a>
+                        </p>
+                        <p class="text-right">{{ post.created }}</p>
+                    </li>
+                    {% endverbatim %}
                 </ul>
             </div>
         </div>

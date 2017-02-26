@@ -11,6 +11,21 @@ profileApp.config(function ($httpProvider) {
 });
 
 profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoUrl) {
+    $scope.allPosts = [];
+
+    $scope.retrieveAllPosts = function (username) {
+        var retrieveAllPostsUrl = djangoUrl.reverse('users:get-posts', [username]);
+        $http.get(retrieveAllPostsUrl).then(function (response) {
+            $scope.allPosts = response.data;
+        }, function (error) {
+            var alert = {
+                type: 'warning',
+                msg: "There was problem with retrieving the posts, please try again"
+            };
+            $scope.alerts.push(alert);
+        });
+    };
+
     $scope.alerts = [];
 
     $scope.toggleFriendship = function (targetUsername) {

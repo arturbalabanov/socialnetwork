@@ -3,59 +3,6 @@
  */
 
 $(document).ready(function () {
-    // var $friendSuccessfulAlert = $('#friend-successful-alert');
-    // var $unfriendSuccessfulAlert = $('#unfriend-successful-alert');
-    // $friendSuccessfulAlert.hide();
-    // $unfriendSuccessfulAlert.hide();
-    //
-    // var $friendButton = $('#friend-button');
-    // var $unfriendButton = $('#unfriend-button');
-    // var $friendButtons = $friendButton.add($unfriendButton);
-    //
-    // var $timelinePostTemplate = $('#timeline-post-template');
-    //
-    // var areFriends = ARE_FRIENDS;
-    //
-    // function toggleFriendButtons() {
-    //     if (areFriends) {
-    //         $friendButton.hide();
-    //         $unfriendButton.show();
-    //     } else {
-    //         $unfriendButton.hide();
-    //         $friendButton.show();
-    //     }
-    // }
-    //
-    // // Initial friend buttons visibility
-    // toggleFriendButtons();
-    //
-    // function showFriendAlert() {
-    //     if (areFriends) {
-    //         $friendSuccessfulAlert.slideDown("fast");
-    //         $friendSuccessfulAlert.delay(2000).fadeOut("slow");
-    //     } else {
-    //         $unfriendSuccessfulAlert.slideDown("fast");
-    //         $unfriendSuccessfulAlert.delay(2000).fadeOut("slow");
-    //     }
-    // }
-    //
-    // function toggleFriendAjaxRequest() {
-    //     var requestData = {
-    //         'target_username': PROFILE_USER_USERNAME,
-    //         'are_friends': areFriends
-    //     };
-    //
-    //     $.post(FRIEND_USER_URL, requestData).done(function (data) {
-    //         areFriends = data['areFriends'];
-    //         showFriendAlert();
-    //         toggleFriendButtons();
-    //     });
-    // }
-    //
-    // $friendButtons.click(toggleFriendAjaxRequest);
-
-    // ==================================================
-
     function likePosts() {
         var $likeButtons = $('.like-button');
 
@@ -104,14 +51,14 @@ $(document).ready(function () {
 
     // ==================================================
 
-    $('#post-likes-modal').modal('show');
-    var postTemplate = Handlebars.compile($('#timeline-post-template').html());
+    // $('#post-likes-modal').modal('show');
+    // var postTemplate = Handlebars.compile($('#timeline-post-template').html());
 
-    $.get(POSTS_LIST_URL).done(function (data) {
-        $allPosts.append(postTemplate({posts: data}));
-        likePosts();
-        // showPostLikes();
-    });
+    // $.get(POSTS_LIST_URL).done(function (data) {
+    //     $allPosts.append(postTemplate({posts: data}));
+    //     likePosts();
+    //     // showPostLikes();
+    // });
 
     // ==================================================
 
