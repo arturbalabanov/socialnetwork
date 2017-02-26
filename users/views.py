@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
@@ -73,14 +74,15 @@ class ProfileView(DetailView):
         return context
 
 
-class FriendView(LoginRequiredMixin, AjaxResponseMixin, JSONResponseMixin, View):
+class ToggleFriendshipView(LoginRequiredMixin, AjaxResponseMixin, JSONResponseMixin, View):
     login_url = reverse_lazy('users:login')
 
     def post_ajax(self, request, *args, **kwargs):
-        current_user = request.user
-        target_username = request.POST['target_username']
-        are_friends = request.POST['are_friends'] == 'true'
+        target_username = json.loads(request.body)['target_username']
         target = UserProfile.objects.get(username=target_username)
+        current_user = request.user
+
+        are_friends = current_user.friends.filter(username=target_username).exists()
 
         if are_friends:
             current_user.friends.remove(target)

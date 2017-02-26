@@ -1,21 +1,48 @@
 /**
  * Created by artur on 24/02/17.
  */
-console.log('js file');
-
-var profileApp = angular.module('profileApp', ['djng.urls']);
+var profileApp = angular.module('profileApp', ['djng.urls', 'ui.bootstrap']);
 
 profileApp.config(function ($httpProvider) {
-    console.log('js config');
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });
 
-profileApp.controller('ProfileCtrl', function ($scope, $http, djangoUrl) {
-    var testUrl = djangoUrl.reverse('timeline:post-get-likes', {'pk': 1});
+profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoUrl) {
+    $scope.alerts = [];
 
-    $http.get(testUrl).success(function (data) {
-        console.log(data[0].username);
-    }).error(function (error) {
+    $scope.toggleFriendship = function (targetUsername) {
+        var friendUserUrl = djangoUrl.reverse('users:toggle_friendship');
+        var requestData = {
+            target_username: targetUsername
+        };
+
+        $http.post(friendUserUrl, requestData).then(function (response) {
+            var alert = {};
+            if (response.data.areFriends) {
+                alert.type = 'success';
+                alert.msg = "You are now friends with " + targetUsername;
+            } else {
+                alert.type = 'danger';
+                alert.msg = "You are no longer friends with " + targetUsername;
+            }
+            $scope.alerts.push(alert);
+        }, function (error) {
+            var alert = {
+                type: 'warning',
+                msg: "There was a problem with the server, try again later"
+            };
+            $scope.alerts.push(alert);
+        })
+    };
+
+    var testUrl = djangoUrl.reverse('timeline:post-get-likes', {'pk': 3});
+
+    $http.get(testUrl).then(function (response) {
+        $scope.likers = response.data;
+    }, function (error) {
         console.log("error:", error);
     });
 });

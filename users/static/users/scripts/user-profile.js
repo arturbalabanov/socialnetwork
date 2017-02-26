@@ -3,56 +3,56 @@
  */
 
 $(document).ready(function () {
-    var $friendSuccessfulAlert = $('#friend-successful-alert');
-    var $unfriendSuccessfulAlert = $('#unfriend-successful-alert');
-    $friendSuccessfulAlert.hide();
-    $unfriendSuccessfulAlert.hide();
-
-    var $friendButton = $('#friend-button');
-    var $unfriendButton = $('#unfriend-button');
-    var $friendButtons = $friendButton.add($unfriendButton);
-
-    var $timelinePostTemplate = $('#timeline-post-template');
-
-    var areFriends = ARE_FRIENDS;
-
-    function toggleFriendButtons() {
-        if (areFriends) {
-            $friendButton.hide();
-            $unfriendButton.show();
-        } else {
-            $unfriendButton.hide();
-            $friendButton.show();
-        }
-    }
-
-    // Initial friend buttons visibility
-    toggleFriendButtons();
-
-    function showFriendAlert() {
-        if (areFriends) {
-            $friendSuccessfulAlert.slideDown("fast");
-            $friendSuccessfulAlert.delay(2000).fadeOut("slow");
-        } else {
-            $unfriendSuccessfulAlert.slideDown("fast");
-            $unfriendSuccessfulAlert.delay(2000).fadeOut("slow");
-        }
-    }
-
-    function toggleFriendAjaxRequest() {
-        var requestData = {
-            'target_username': PROFILE_USER_USERNAME,
-            'are_friends': areFriends
-        };
-
-        $.post(FRIEND_USER_URL, requestData).done(function (data) {
-            areFriends = data['areFriends'];
-            showFriendAlert();
-            toggleFriendButtons();
-        });
-    }
-
-    $friendButtons.click(toggleFriendAjaxRequest);
+    // var $friendSuccessfulAlert = $('#friend-successful-alert');
+    // var $unfriendSuccessfulAlert = $('#unfriend-successful-alert');
+    // $friendSuccessfulAlert.hide();
+    // $unfriendSuccessfulAlert.hide();
+    //
+    // var $friendButton = $('#friend-button');
+    // var $unfriendButton = $('#unfriend-button');
+    // var $friendButtons = $friendButton.add($unfriendButton);
+    //
+    // var $timelinePostTemplate = $('#timeline-post-template');
+    //
+    // var areFriends = ARE_FRIENDS;
+    //
+    // function toggleFriendButtons() {
+    //     if (areFriends) {
+    //         $friendButton.hide();
+    //         $unfriendButton.show();
+    //     } else {
+    //         $unfriendButton.hide();
+    //         $friendButton.show();
+    //     }
+    // }
+    //
+    // // Initial friend buttons visibility
+    // toggleFriendButtons();
+    //
+    // function showFriendAlert() {
+    //     if (areFriends) {
+    //         $friendSuccessfulAlert.slideDown("fast");
+    //         $friendSuccessfulAlert.delay(2000).fadeOut("slow");
+    //     } else {
+    //         $unfriendSuccessfulAlert.slideDown("fast");
+    //         $unfriendSuccessfulAlert.delay(2000).fadeOut("slow");
+    //     }
+    // }
+    //
+    // function toggleFriendAjaxRequest() {
+    //     var requestData = {
+    //         'target_username': PROFILE_USER_USERNAME,
+    //         'are_friends': areFriends
+    //     };
+    //
+    //     $.post(FRIEND_USER_URL, requestData).done(function (data) {
+    //         areFriends = data['areFriends'];
+    //         showFriendAlert();
+    //         toggleFriendButtons();
+    //     });
+    // }
+    //
+    // $friendButtons.click(toggleFriendAjaxRequest);
 
     // ==================================================
 
@@ -80,36 +80,37 @@ $(document).ready(function () {
 
     // ==================================================
 
-    var postLikesTemplate = Handlebars.compile($('#post-likes-list-template').html());
-
-    function showPostLikes() {
-        var $postLikesLinks = $('.post-likes-link');
-        var $postLikesModal = $('#post-likes-modal');
-        var $allPostsLikes = $('#all-post-likes');
-
-        function showLikesDialog(postId) {
-            // FIXME: hard coded URL, filthy heretic!
-            $.get("/timeline/posts/" + postId + "/get-likes/").success(function (data) {
-                $allPostsLikes.html(postLikesTemplate({users: data}));
-                $postLikesModal.modal('show');
-            });
-        }
-
-        $postLikesLinks.click(function (e) {
-            var $this = $(this);
-            var postId = $this.closest('.timeline-post').attr('data-post-id');
-            showLikesDialog(postId);
-        })
-    }
+    // var postLikesTemplate = Handlebars.compile($('#post-likes-list-template').html());
+    //
+    // function showPostLikes() {
+    //     var $postLikesLinks = $('.post-likes-link');
+    //     var $postLikesModal = $('#post-likes-modal');
+    //     var $allPostsLikes = $('#all-post-likes');
+    //
+    //     function showLikesDialog(postId) {
+    //         // FIXME: hard coded URL, filthy heretic!
+    //         $.get("/timeline/posts/" + postId + "/get-likes/").success(function (data) {
+    //             $allPostsLikes.html(postLikesTemplate({users: data}));
+    //             $postLikesModal.modal('show');
+    //         });
+    //     }
+    //
+    //     $postLikesLinks.click(function (e) {
+    //         var $this = $(this);
+    //         var postId = $this.closest('.timeline-post').attr('data-post-id');
+    //         showLikesDialog(postId);
+    //     })
+    // }
 
     // ==================================================
 
+    $('#post-likes-modal').modal('show');
     var postTemplate = Handlebars.compile($('#timeline-post-template').html());
 
     $.get(POSTS_LIST_URL).done(function (data) {
         $allPosts.append(postTemplate({posts: data}));
         likePosts();
-        showPostLikes();
+        // showPostLikes();
     });
 
     // ==================================================

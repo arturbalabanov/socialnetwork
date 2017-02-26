@@ -14,12 +14,10 @@
     <div ng-app="profileApp" ng-controller="ProfileCtrl">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <div class="alert alert-success" role="alert" id="friend-successful-alert">
-                    You are now friends with <strong>{{ profile_user.get_full_name }}</strong>
-                </div>
-                <div class="alert alert-danger" role="alert" id="unfriend-successful-alert">
-                    You are no longer friends with <strong>{{ profile_user.get_full_name }}</strong>
-                </div>
+                {% verbatim %}
+                    <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + alert.type">{{ alert.msg }}</div>
+                {% endverbatim %}
+
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">
@@ -70,10 +68,9 @@
                         <div class="panel-footer">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <a class="btn btn-primary friend-buttons" id="friend-button"><i
-                                            class="glyphicon glyphicon-user"></i></a>
-                                    <a class="btn btn-danger friend-buttons" id="unfriend-button"><i
-                                            class="glyphicon glyphicon-user"></i></a>
+                                    <button class="btn btn-primary" ng-click="toggleFriendship('{{ profile_user.username }}')">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </button>
                                     <a class="btn btn-success"><i class="glyphicon glyphicon-envelope"></i></a>
                                 </div>
                             </div>
@@ -106,6 +103,7 @@
                 </ul>
             </div>
         </div>
+        {% verbatim %}
         <div id="post-likes-modal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -117,18 +115,15 @@
                     </div>
                     <div class="modal-body">
                         <ul id="all-post-likes" class="list-group">
-                            {% tplhandlebars "post-likes-list-template" %}
-                                {{#users}}
-                                    <li class="list-group-item">
-                                        <strong>{{ username }}</strong>
-                                    </li>
-                                {{/users}}
-                            {% endtplhandlebars %}
+                            <li class="list-group-item" ng-repeat="user in likers">
+                                <strong>{{ user.username }}</strong>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+        {% endverbatim %}
     </div>
 {% endblock %}
 
@@ -137,7 +132,7 @@
     <script src="{% static 'handlebars-4.0.5-dist/js/handlebars.min.js' %}"></script>
     <script>
         var PROFILE_USER_USERNAME = "{{ profile_user.username | escapejs }}";
-        var FRIEND_USER_URL = "{% url 'users:friend'  %}";
+        var FRIEND_USER_URL = "{% url 'users:toggle_friendship'  %}";
         var ARE_FRIENDS = "{{ are_friends | escapejs }}" == "True";
         var LIKE_TIMELINE_POST_URL = "{% url 'timeline:post-like' %}";
         var POSTS_LIST_URL = "{% url 'users:get-posts' profile_user.username %}";
