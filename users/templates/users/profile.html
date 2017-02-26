@@ -16,6 +16,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 {% verbatim %}
                     <div uib-alert ng-repeat="alert in alerts"
+                         class="fade"
                          ng-class="'alert-' + alert.type"
                          close="closeAlert($index)"
                          dismiss-on-timeout="1000">{{ alert.msg }}</div>

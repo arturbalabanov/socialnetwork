@@ -11,3 +11,24 @@
 .table-user-information > tbody > tr > td {
     border-top: 0;
 }
+
+/*Angular Animations*/
+.fade.ng-leave,
+.fade.ng-enter {
+    -webkit-transition: .5s;
+    transition: .5s;
+}
+
+.fade.ng-enter {
+    opacity: 0;
+}
+
+.fade,
+.fade.ng-enter-active,
+.fade.ng-leave {
+    opacity: 1;
+}
+
+.fade.ng-leave-active {
+    opacity: 0;
+}
