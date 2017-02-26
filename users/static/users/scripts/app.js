@@ -23,10 +23,10 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
             var alert = {};
             if (response.data.areFriends) {
                 alert.type = 'success';
-                alert.msg = "You are now friends with " + targetUsername;
+                alert.msg = "You are now friends with " + targetUsername + ".";
             } else {
                 alert.type = 'danger';
-                alert.msg = "You are no longer friends with " + targetUsername;
+                alert.msg = "You are no longer friends with " + targetUsername + ".";
             }
             $scope.alerts.push(alert);
         }, function (error) {
@@ -35,7 +35,11 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
                 msg: "There was a problem with the server, try again later"
             };
             $scope.alerts.push(alert);
-        })
+        });
+    };
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
     };
 
     var testUrl = djangoUrl.reverse('timeline:post-get-likes', {'pk': 3});

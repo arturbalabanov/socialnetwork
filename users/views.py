@@ -74,6 +74,7 @@ class ProfileView(DetailView):
         return context
 
 
+# TODO: Move to Django REST Framework view/viewset
 class ToggleFriendshipView(LoginRequiredMixin, AjaxResponseMixin, JSONResponseMixin, View):
     login_url = reverse_lazy('users:login')
 
