@@ -29,6 +29,7 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
                 alert.msg = "You are no longer friends with " + targetUsername + ".";
             }
             $scope.alerts.push(alert);
+            $scope.areFriends = response.data.areFriends;
         }, function (error) {
             var alert = {
                 type: 'warning',
@@ -36,6 +37,10 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
             };
             $scope.alerts.push(alert);
         });
+    };
+
+    $scope.friendButtonCSSClass = function (areFriends) {
+        return areFriends ? 'btn-danger' : 'btn-primary';
     };
 
     $scope.closeAlert = function (index) {
