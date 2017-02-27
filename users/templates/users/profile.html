@@ -94,7 +94,7 @@
                         <strong>{{ post.author }}:</strong>
                         {{ post.text }}
                         <p class="text-left">
-                            <a class="btn btn-sm btn-primary like-button">
+                            <a class="btn btn-sm btn-primary like-button" ng-click="likePost(post)">
                                 <span class="glyphicon glyphicon-thumbs-up"></span> Like
                             </a>
                             <a href="#" class="post-likes-link">
