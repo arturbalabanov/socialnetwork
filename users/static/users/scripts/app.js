@@ -82,6 +82,10 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
     $http.get(testUrl).then(function (response) {
         $scope.likers = response.data;
     }, function (error) {
-        console.log("error:", error);
+        var alert = {
+            type: 'warning',
+            msg: "There was a problem with the server, try again later"
+        };
+        $scope.alerts.push(alert);
     });
 });
