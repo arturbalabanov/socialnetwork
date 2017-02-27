@@ -73,10 +73,6 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
         });
     };
 
-    $scope.friendButtonCSSClass = function (areFriends) {
-        return areFriends ? 'btn-danger' : 'btn-primary';
-    };
-
     $scope.closeAlert = function (index) {
         $scope.alerts.splice(index, 1);
     };

@@ -72,8 +72,8 @@
                         <div class="panel-footer">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button class="btn {% if are_friends %} btn-danger {% else %} btn-primary {% endif %}"
-                                            ng-class="friendButtonCSSClass(areFriends)"
+                                    <button class="btn" ng-init="areFriends = ('{{ are_friends | escapejs }}' === 'True')"
+                                            ng-class="{'btn-danger': areFriends, 'btn-primary': !areFriends}"
                                             ng-click="toggleFriendship('{{ profile_user.username }}')">
                                         <i class="glyphicon glyphicon-user"></i>
                                     </button>
