@@ -2,7 +2,7 @@ from django import forms
 from djng.forms.angular_model import NgModelFormMixin
 from djng.styling.bootstrap3.forms import Bootstrap3FormMixin
 
-from timeline.models import Post
+from timeline.models import Post, PostComment
 
 
 class CreatePostForm(NgModelFormMixin, forms.ModelForm, Bootstrap3FormMixin):
@@ -16,11 +16,14 @@ class CreatePostForm(NgModelFormMixin, forms.ModelForm, Bootstrap3FormMixin):
         kwargs.update(scope_prefix='create_post_form')
         super(CreatePostForm, self).__init__(*args, **kwargs)
 
-    def save(self, commit=True):
-        post = super(CreatePostForm, self).save(commit=False)
-        post.author = self.request.user
 
-        if commit:
-            post.save()
+class CreatePostCommentForm(NgModelFormMixin, forms.ModelForm, Bootstrap3FormMixin):
+    text = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Write your comment"}))
 
-        return post
+    class Meta:
+        model = PostComment
+        fields = ['text']
+
+    def __init__(self, *args, **kwargs):
+        kwargs.update(scope_prefix='post_comment_form')
+        super(CreatePostCommentForm, self).__init__(*args, **kwargs)

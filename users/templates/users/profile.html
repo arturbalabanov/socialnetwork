@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% load humanize %}
 
-{% load templatetag_handlebars %}
+{% load djng_tags %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'users/css/user-profile.css' %}">
@@ -104,7 +104,7 @@
                 {% endif %}
                 <div class="row">
                     <ul id="all-posts" class="list-group" ng-init="retrieveAllPosts('{{ profile_user.username }}')">
-                        {% verbatim %}
+                        {% angularjs %}
                         <li class="list-group-item timeline-post fade-animation"
                             ng-repeat="post in allPosts | orderBy:'created':true">
                             <div class="row">
@@ -123,7 +123,9 @@
                                     </a>
                                 </div>
                                 <div class="col-xs-4">
-                                    {{ post.created | date:"dd/MM/yyyy 'at' HH:mm" }}
+                                    <p class="text-right">
+                                        {{ post.created | date:"dd/MM/yyyy 'at' HH:mm" }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="row">
@@ -131,13 +133,33 @@
                                     <a class="btn btn-sm btn-primary like-button" ng-click="likePost(post)">
                                         <span class="glyphicon glyphicon-thumbs-up"></span> Like
                                     </a>
-                                    <a class="btn btn-sm btn-success comment-button" ng-click="">
+                                    <a class="btn btn-sm btn-success comment-button"
+                                       ng-click="showCommentForm = !showCommentForm">
                                         <span class="glyphicon glyphicon-comment"></span> Comment
                                     </a>
                                 </div>
                             </div>
+                            <div class="row" ng-show="showCommentForm">
+                                <div class="col-xs-12">
+                                    <p>
+                                        <form>
+                                            <div class="input-group">
+                                                {% csrf_token %}
+                                                {% angularjs False %}
+                                                    {{ comment_form }}
+                                                {% endangularjs %}
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-success" type="button">
+                                                        <span class="glyphicon glyphicon-comment"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </p>
+                                </div>
+                            </div>
                         </li>
-                        {% endverbatim %}
+                        {% endangularjs %}
                     </ul>
                 </div>
             </div>

@@ -106,7 +106,7 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
                 msg: "There was a problem with the server, try again later"
             };
             $scope.alerts.push(alert);
-        })
+        });
     };
 });
 

@@ -10,7 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from timeline.api.serializers import PostSerializer
-from timeline.forms import CreatePostForm
+from timeline.forms import CreatePostForm, CreatePostCommentForm
 from users.forms import RegistrationForm, LoginForm, SearchForm
 from users.models import UserProfile
 
@@ -70,6 +70,7 @@ class ProfileView(DetailView):
         context['are_friends'] = user.friends.filter(username=profile_user.username).exists()
         context['own_profile'] = user == profile_user
         context['post_form'] = CreatePostForm()
+        context['comment_form'] = CreatePostCommentForm()
 
         return context
 
