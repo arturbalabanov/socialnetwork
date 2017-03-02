@@ -11,12 +11,12 @@
 {% endblock %}
 
 {% block content %}
-    <div ng-app="profileApp" ng-controller="ProfileCtrl">
-        <div class="row">
+    <div ng-app="profileApp" id="profile-app">
+        <div class="row" ng-controller="ProfileCtrl">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 {% verbatim %}
                     <div uib-alert ng-repeat="alert in alerts"
-                         class="fade"
+                         class="fade-animation"
                          ng-class="'alert-' + alert.type"
                          close="closeAlert($index)"
                          dismiss-on-timeout="1000">{{ alert.msg }}</div>
@@ -97,7 +97,7 @@
                             <a class="btn btn-sm btn-primary like-button" ng-click="likePost(post)">
                                 <span class="glyphicon glyphicon-thumbs-up"></span> Like
                             </a>
-                            <a href="#" class="post-likes-link">
+                            <a class="post-likes-link" ng-click="showLikesModal(post)">
                                 <span class="number-of-likes">{{ post.number_of_likes }}</span> people like this
                             </a>
                         </p>
@@ -107,25 +107,24 @@
                 </ul>
             </div>
         </div>
+
         {% verbatim %}
-        <div id="post-likes-modal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">Likes</h4>
-                    </div>
-                    <div class="modal-body">
-                        <ul id="all-post-likes" class="list-group">
-                            <li class="list-group-item" ng-repeat="user in likers">
-                                <strong>{{ user.username }}</strong>
-                            </li>
-                        </ul>
-                    </div>
+        <div id="post-likes-modal">
+            <script id="templates/post-likes-modal.html" type="text/ng-template">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Likes</h4>
                 </div>
-            </div>
+                <div class="modal-body">
+                    <ul id="all-post-likes" class="list-group">
+                        <li class="list-group-item" ng-repeat="user in users">
+                            <strong>{{ user.username }}</strong>
+                        </li>
+                    </ul>
+                </div>
+            </script>
         </div>
         {% endverbatim %}
     </div>
@@ -143,4 +142,6 @@
     <script src="{% static 'scripts/ajax-csrf.js' %}"></script>
     <script src="{% static 'users/scripts/user-profile.js' %}"></script>
     <script src="{% static 'users/scripts/app.js' %}"></script>
+    <script src="{% static 'users/scripts/controllers/profile-controller.js' %}"></script>
+    <script src="{% static 'users/scripts/controllers/post-likes-model-controller.js' %}"></script>
 {% endblock %}

@@ -12,23 +12,30 @@
     border-top: 0;
 }
 
+/*Why is this not the default behaviour?*/
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
 /*Angular Animations*/
-.fade.ng-leave,
-.fade.ng-enter {
+.fade-animation.ng-leave,
+.fade-animation.ng-enter {
     -webkit-transition: .5s;
     transition: .5s;
 }
 
-.fade.ng-enter {
+.fade-animation.ng-enter {
     opacity: 0;
 }
 
-.fade,
-.fade.ng-enter-active,
-.fade.ng-leave {
+.fade-animation,
+.fade-animation.ng-enter-active,
+.fade-animation.ng-leave {
     opacity: 1;
 }
 
-.fade.ng-leave-active {
+.fade-animation.ng-leave-active {
     opacity: 0;
 }
