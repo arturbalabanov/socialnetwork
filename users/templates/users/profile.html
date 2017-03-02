@@ -116,7 +116,7 @@
                                     <span class="number-of-likes">{{ post.number_of_likes }}</span> people like this
                                 </a>
                             </p>
-                            <p class="text-right">{{ post.created }}</p>
+                            <p class="text-right">{{ post.created | date:"dd/MM/yyyy 'at' HH:mm" }}</p>
                         </li>
                         {% endverbatim %}
                     </ul>
