@@ -158,6 +158,17 @@
                                     </p>
                                 </div>
                             </div>
+                            <div class="row" ng-show="post.comments.length">
+                                <div class="col-xs-12">
+                                    <p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item" ng-repeat="comment in post.comments | orderBy:'created':true">
+                                                <strong>{{ comment.author }}: </strong>{{ comment.text }}
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
                         </li>
                         {% endangularjs %}
                     </ul>
