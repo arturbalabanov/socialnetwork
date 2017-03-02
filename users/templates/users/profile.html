@@ -108,6 +108,7 @@
                         <li class="list-group-item timeline-post fade-animation" ng-repeat="post in allPosts | orderBy:'created':true">
                             <strong>{{ post.author }}:</strong>
                             {{ post.text }}
+                            <p class="text-right">{{ post.created | date:"dd/MM/yyyy 'at' HH:mm" }}</p>
                             <p class="text-left">
                                 <a class="btn btn-sm btn-primary like-button" ng-click="likePost(post)">
                                     <span class="glyphicon glyphicon-thumbs-up"></span> Like
@@ -115,8 +116,10 @@
                                 <a class="post-likes-link" ng-click="showLikesModal(post)">
                                     <span class="number-of-likes">{{ post.number_of_likes }}</span> people like this
                                 </a>
+                                <a class="btn btn-sm btn-success comment-button" ng-click="">
+                                    <span class="glyphicon glyphicon-comment"></span> Comment
+                                </a>
                             </p>
-                            <p class="text-right">{{ post.created | date:"dd/MM/yyyy 'at' HH:mm" }}</p>
                         </li>
                         {% endverbatim %}
                     </ul>
