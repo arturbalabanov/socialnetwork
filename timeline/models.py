@@ -11,7 +11,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(UserProfile, related_name='liked_timeline_posts')
 
     class Meta:
-        ordering = ['-created']
+        ordering = ['created']
 
     @property
     def number_of_likes(self):

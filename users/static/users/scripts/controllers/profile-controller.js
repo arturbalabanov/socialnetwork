@@ -98,7 +98,7 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
         };
 
         $http.post(createNewPostUrl, requestData).then(function (response) {
-            $scope.allPosts.unshift(response.data);
+            $scope.allPosts.push(response.data);
             $scope.create_post_form.text = "";
         }, function (error) {
             var alert = {
