@@ -105,7 +105,7 @@
                 <div class="row">
                     <ul id="all-posts" class="list-group" ng-init="retrieveAllPosts('{{ profile_user.username }}')">
                         {% verbatim %}
-                        <li class="list-group-item timeline-post" ng-repeat="post in allPosts">
+                        <li class="list-group-item timeline-post fade-animation" ng-repeat="post in allPosts">
                             <strong>{{ post.author }}:</strong>
                             {{ post.text }}
                             <p class="text-left">
