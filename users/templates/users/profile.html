@@ -3,7 +3,6 @@
 {% load staticfiles %}
 {% load humanize %}
 
-{% load crispy_forms_tags %}
 {% load templatetag_handlebars %}
 
 {% block css %}
@@ -15,11 +14,12 @@
         <div class="row" ng-controller="ProfileCtrl">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 {% verbatim %}
-                    <div uib-alert ng-repeat="alert in alerts"
-                         class="fade-animation"
-                         ng-class="'alert-' + alert.type"
-                         close="closeAlert($index)"
-                         dismiss-on-timeout="1000">{{ alert.msg }}</div>
+                <div uib-alert ng-repeat="alert in alerts"
+                     class="fade-animation"
+                     ng-class="'alert-' + alert.type"
+                     close="closeAlert($index)"
+                     dismiss-on-timeout="1000">{{ alert.msg }}
+                </div>
                 {% endverbatim %}
 
                 <div class="panel panel-info">
@@ -72,7 +72,8 @@
                         <div class="panel-footer">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button class="btn" ng-init="areFriends = ('{{ are_friends | escapejs }}' === 'True')"
+                                    <button class="btn"
+                                            ng-init="areFriends = ('{{ are_friends | escapejs }}' === 'True')"
                                             ng-class="{'btn-danger': areFriends, 'btn-primary': !areFriends}"
                                             ng-click="toggleFriendship('{{ profile_user.username }}')">
                                         <i class="glyphicon glyphicon-user"></i>
@@ -86,25 +87,40 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 {% if own_profile %}
-                    {% crispy post_form %}
+                    <div class="row">
+                        <form ng-submit="createNewPost()">
+                            {% csrf_token %}
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Create a new post</div>
+                                <div class="panel-body">
+                                    {{ post_form.as_div }}
+                                </div>
+                                <div class="panel-footer">
+                                    <button type="submit" class="btn btn-primary">Post</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 {% endif %}
-                <ul id="all-posts" class="list-group" ng-init="retrieveAllPosts('{{ profile_user.username }}')">
-                    {% verbatim %}
-                    <li class="list-group-item timeline-post" ng-repeat="post in allPosts">
-                        <strong>{{ post.author }}:</strong>
-                        {{ post.text }}
-                        <p class="text-left">
-                            <a class="btn btn-sm btn-primary like-button" ng-click="likePost(post)">
-                                <span class="glyphicon glyphicon-thumbs-up"></span> Like
-                            </a>
-                            <a class="post-likes-link" ng-click="showLikesModal(post)">
-                                <span class="number-of-likes">{{ post.number_of_likes }}</span> people like this
-                            </a>
-                        </p>
-                        <p class="text-right">{{ post.created }}</p>
-                    </li>
-                    {% endverbatim %}
-                </ul>
+                <div class="row">
+                    <ul id="all-posts" class="list-group" ng-init="retrieveAllPosts('{{ profile_user.username }}')">
+                        {% verbatim %}
+                        <li class="list-group-item timeline-post" ng-repeat="post in allPosts">
+                            <strong>{{ post.author }}:</strong>
+                            {{ post.text }}
+                            <p class="text-left">
+                                <a class="btn btn-sm btn-primary like-button" ng-click="likePost(post)">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                                </a>
+                                <a class="post-likes-link" ng-click="showLikesModal(post)">
+                                    <span class="number-of-likes">{{ post.number_of_likes }}</span> people like this
+                                </a>
+                            </p>
+                            <p class="text-right">{{ post.created }}</p>
+                        </li>
+                        {% endverbatim %}
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -140,7 +156,6 @@
         var POSTS_LIST_URL = "{% url 'users:get-posts' profile_user.username %}";
     </script>
     <script src="{% static 'scripts/ajax-csrf.js' %}"></script>
-    <script src="{% static 'users/scripts/user-profile.js' %}"></script>
     <script src="{% static 'users/scripts/app.js' %}"></script>
     <script src="{% static 'users/scripts/controllers/profile-controller.js' %}"></script>
     <script src="{% static 'users/scripts/controllers/post-likes-model-controller.js' %}"></script>

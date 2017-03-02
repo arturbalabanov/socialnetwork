@@ -90,5 +90,23 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
             $scope.alerts.push(alert);
         });
     };
+
+    $scope.createNewPost = function () {
+        var createNewPostUrl = djangoUrl.reverse('timeline:post-list');
+        var requestData = {
+            'text': $scope.create_post_form.text
+        };
+
+        $http.post(createNewPostUrl, requestData).then(function (response) {
+            $scope.allPosts.unshift(response.data);
+            $scope.create_post_form.text = "";
+        }, function (error) {
+            var alert = {
+                type: 'warning',
+                msg: "There was a problem with the server, try again later"
+            };
+            $scope.alerts.push(alert);
+        })
+    };
 });
 
