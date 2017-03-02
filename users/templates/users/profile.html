@@ -189,14 +189,6 @@
 
 
 {% block scripts %}
-    <script>
-        var PROFILE_USER_USERNAME = "{{ profile_user.username | escapejs }}";
-        var FRIEND_USER_URL = "{% url 'users:toggle_friendship'  %}";
-        var ARE_FRIENDS = "{{ are_friends | escapejs }}" == "True";
-        var LIKE_TIMELINE_POST_URL = "{% url 'timeline:post-like' %}";
-        var POSTS_LIST_URL = "{% url 'users:get-posts' profile_user.username %}";
-    </script>
-    <script src="{% static 'scripts/ajax-csrf.js' %}"></script>
     <script src="{% static 'users/scripts/app.js' %}"></script>
     <script src="{% static 'users/scripts/controllers/profile-controller.js' %}"></script>
     <script src="{% static 'users/scripts/controllers/post-likes-model-controller.js' %}"></script>
