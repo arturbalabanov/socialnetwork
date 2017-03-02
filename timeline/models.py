@@ -22,3 +22,24 @@ class Post(models.Model):
 
         if commit:
             self.save()
+
+
+class PostComment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments')
+    author = models.ForeignKey(UserProfile, related_name='post_comments')
+    created = models.DateField(default=timezone.now)
+    text = models.TextField()
+    likes = models.ManyToManyField(UserProfile, related_name='liked_comments')
+
+    class Meta:
+        ordering = ['created']
+
+    @property
+    def number_of_likes(self):
+        return self.likes.count()
+
+    def like(self, user, commit=True):
+        self.likes.add(user)
+
+        if commit:
+            self.save()
