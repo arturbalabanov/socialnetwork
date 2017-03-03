@@ -6,7 +6,8 @@ from timeline.models import Post, PostComment
 
 
 class CreatePostForm(NgModelFormMixin, forms.ModelForm, Bootstrap3FormMixin):
-    text = forms.CharField(widget=forms.Textarea({'cols': '30', 'rows': '3'}), label="")
+    text = forms.CharField(
+        widget=forms.Textarea({'cols': '30', 'rows': '3', 'placeholder': "What's on your mind?"}), label="")
 
     class Meta:
         model = Post
@@ -18,7 +19,7 @@ class CreatePostForm(NgModelFormMixin, forms.ModelForm, Bootstrap3FormMixin):
 
 
 class CreatePostCommentForm(NgModelFormMixin, forms.ModelForm, Bootstrap3FormMixin):
-    text = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Write your comment"}))
+    text = forms.CharField(label="", widget=forms.TextInput({'placeholder': "Write your comment"}))
 
     class Meta:
         model = PostComment
