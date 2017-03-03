@@ -139,34 +139,38 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="row" ng-show="showCommentForm">
-                                <div class="col-xs-12">
-                                    <p>
-                                        <form>
-                                            <div class="input-group">
-                                                {% csrf_token %}
-                                                {% angularjs False %}
-                                                    {{ comment_form }}
-                                                {% endangularjs %}
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-success" type="button">
-                                                        <span class="glyphicon glyphicon-comment"></span>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </form>
-                                    </p>
-                                </div>
-                            </div>
                             <div class="row" ng-show="post.comments.length">
                                 <div class="col-xs-12">
                                     <p>
-                                        <ul class="list-group">
-                                            <li class="list-group-item" ng-repeat="comment in post.comments | orderBy:'created':true">
-                                                <strong>{{ comment.author }}: </strong>{{ comment.text }}
-                                            </li>
-                                        </ul>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"
+                                            ng-repeat="comment in post.comments | orderBy:'created':false">
+                                            <strong>{{ comment.author }}: </strong>{{ comment.text }}
+                                        </li>
+                                    </ul>
                                     </p>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="showCommentForm">
+                                <div class="col-xs-12">
+                                    <form ng-submit="createNewPostComment(post)"
+                                          ng-init="post_comment_form['post_id_' + post.id] = post_comment_form['post_id_' + post.id] || {}">
+                                        <div class="input-group">
+                                            <!--
+                                            <input class="form-control" name="text" ng-model="post_comment_form['post_id_' + post.id].text" placeholder="Write your comment" type="text" required>
+                                            -->
+                                            {% angularjs False %}
+                                                {% csrf_token %}
+                                                {{ comment_form }}
+                                            {% endangularjs %}
+
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-success" type="submit">
+                                                    <span class="glyphicon glyphicon-comment"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </li>

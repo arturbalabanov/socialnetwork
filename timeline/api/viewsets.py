@@ -38,8 +38,7 @@ class PostCommentViewSet(viewsets.ModelViewSet):
     permission_classes = (PostCommentPermission,)
 
     def perform_create(self, serializer):
-        post = get_object_or_404(Post.objectsj.all(), pk=serializer.data.get('post_id'))
-        serializer.save(author=self.request.user, post=post)
+        serializer.save(author=self.request.user, post=serializer.validated_data['post'])
 
     @list_route(methods=['post'])
     def like(self, serializer):

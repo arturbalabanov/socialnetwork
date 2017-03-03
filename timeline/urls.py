@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework import routers
 
-from timeline.api.viewsets import PostViewSet
+from timeline.api.viewsets import PostViewSet, PostCommentViewSet
 
 # urlpatterns = [
 #     url(r'posts/$', PostViewSet.as_view({'get': 'list', 'post': 'create'}), name='create_post'),
@@ -11,4 +11,5 @@ from timeline.api.viewsets import PostViewSet
 
 router = routers.SimpleRouter()
 router.register(r'posts', PostViewSet)
+router.register(r'post_comments', PostCommentViewSet)
 urlpatterns = router.urls

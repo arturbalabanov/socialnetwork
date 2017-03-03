@@ -27,7 +27,7 @@ class Post(models.Model):
 class PostComment(models.Model):
     post = models.ForeignKey(Post, related_name='comments')
     author = models.ForeignKey(UserProfile, related_name='post_comments')
-    created = models.DateField(default=timezone.now)
+    created = models.DateTimeField(default=timezone.now)
     text = models.TextField()
     likes = models.ManyToManyField(UserProfile, related_name='liked_comments')
 

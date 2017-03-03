@@ -1,7 +1,7 @@
 /**
  * Created by artur on 24/02/17.
  */
-profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoUrl) {
+profileApp.controller('ProfileCtrl', ['$scope', '$http', '$uibModal', 'djangoUrl', function ($scope, $http, $uibModal, djangoUrl) {
     $scope.allPosts = [];
 
     $scope.retrieveAllPosts = function (username) {
@@ -108,5 +108,26 @@ profileApp.controller('ProfileCtrl', function ($scope, $http, $uibModal, djangoU
             $scope.alerts.push(alert);
         });
     };
-});
+
+    $scope.post_comment_form = {};
+
+    $scope.createNewPostComment = function (post) {
+        var createNewPostCommentUrl = djangoUrl.reverse('timeline:postcomment-list');
+        var request_data = {
+            text: $scope.post_comment_form['post_id_' + post.id].text,
+            post_id: post.id
+        };
+
+        $http.post(createNewPostCommentUrl, request_data).then(function (response) {
+            post.comments.push(response.data);
+            $scope.post_comment_form['post_id_' + post.id].text = ""
+        }, function (error) {
+            var alert = {
+                type: 'warning',
+                msg: "There was a problem with the server, try again later"
+            };
+            $scope.alerts.push(alert);
+        });
+    };
+}]);
 

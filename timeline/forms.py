@@ -25,5 +25,7 @@ class CreatePostCommentForm(NgModelFormMixin, forms.ModelForm, Bootstrap3FormMix
         fields = ['text']
 
     def __init__(self, *args, **kwargs):
-        kwargs.update(scope_prefix='post_comment_form')
+        # Gives every form field a unique model name, very important since it's
+        # typical to have multiple of these forms on one page
+        kwargs.update(scope_prefix="post_comment_form['post_id_' + post.id]")
         super(CreatePostCommentForm, self).__init__(*args, **kwargs)

@@ -5,7 +5,7 @@ from timeline.models import Post, PostComment
 
 class PostCommentSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
-    post_id = serializers.ReadOnlyField(source='post.id')
+    post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects.all(), source='post')
 
     class Meta:
         model = PostComment
@@ -14,7 +14,7 @@ class PostCommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
-    comments = PostCommentSerializer(many=True)
+    comments = PostCommentSerializer(many=True, required=False)
 
     class Meta:
         model = Post
