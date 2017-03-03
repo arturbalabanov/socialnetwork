@@ -156,9 +156,6 @@
                                     <form ng-submit="createNewPostComment(post)"
                                           ng-init="post_comment_form['post_id_' + post.id] = post_comment_form['post_id_' + post.id] || {}">
                                         <div class="input-group">
-                                            <!--
-                                            <input class="form-control" name="text" ng-model="post_comment_form['post_id_' + post.id].text" placeholder="Write your comment" type="text" required>
-                                            -->
                                             {% angularjs False %}
                                                 {% csrf_token %}
                                                 {{ comment_form }}
